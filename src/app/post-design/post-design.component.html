@@ -1,0 +1,36 @@
+<h2>My Posts</h2>
+
+<button type="button" *ngIf="!showAddPostForm && !selectedPost && !isPostSelected" (click)="showAddPost(true)">Add new post</button>
+<button type="button" *ngIf="showAddPostForm && !selectedPost && !isPostSelected" (click)="showAddPost(false)">Back</button>
+
+
+<div *ngIf="showAddPostForm && !selectedPost && !isPostSelected">
+  <form [formGroup]="newPostForm" (ngSubmit)="postPosts()">
+
+    <label for="Post Title" >Post Title:</label>
+        <input type="text" id="title" formControlName="title"><br>
+        
+      
+      <label for="Body">Body:</label>
+      <input type="text" id="body" formControlName="body"><br>
+      
+      
+      <label for="userId">User Id:</label>
+      <input type="text" id="userId" formControlName="userId"><br>
+      
+          
+    <button type="submit" [disabled]="newPostForm.invalid">Add Post</button> 
+  </form>
+</div>
+
+
+<ul class="posts" *ngIf="!selectedPost">
+  <li *ngFor="let post of posts">
+    <button type="button" (click)="onSelect(post)">
+      <span  class="title">{{post.title}}</span>
+    </button>
+  </li>
+</ul>
+
+<app-post-details *ngIf="selectedPost" [post]="selectedPost" (deselect)="deselectPost()" (postUpdated)="onPostUpdated(posts)"></app-post-details> 
+
